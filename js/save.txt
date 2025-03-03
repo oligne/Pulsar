@@ -1,0 +1,69 @@
+
+
+
+
+function scene1() {
+    if (points.length === 0) {
+        wi = height / 2 - 20;
+        for (let i = 0; i < n; i++) {
+            points.push(createVector(random(-width / 2, width / 2), random(-height / 2, height / 2)));
+        }
+    }
+
+    for (let i = 0; i < points.length; i++) {
+        let angle = noise(points[i].x * 0.05, points[i].y * 0.005, frameCount * 0.002) * TAU * 10;
+        points[i].add(p5.Vector.fromAngle(angle).mult(2));
+
+        if (abs(points[i].x) > wi || abs(points[i].y) > wi) {
+            points[i] = createVector(random(-wi, wi), random(-wi, wi));
+        } else {
+            stroke(255, 150);
+            point(points[i].x, points[i].y);
+        }
+    }
+}
+
+
+
+function scene1() {
+    if (points.length === 0) {
+        wi = height;
+        for (let i = 0; i < n; i++) {
+            points.push(createVector(random(-width / 2, width / 2), random(-height / 2, height / 2)));
+        }
+    }
+
+    for (let i = 0; i < points.length; i++) {
+        let angle = noise(points[i].x * 0.001, points[i].y * 0.001, frameCount * 0.002) * TAU * 10;
+        points[i].add(p5.Vector.fromAngle(angle).mult(2));
+
+        if (abs(points[i].x) > wi || abs(points[i].y) > wi) {
+            points[i] = createVector(random(-wi, wi), random(-wi, wi));
+        } else {
+            stroke(255, 150);
+            point(points[i].x, points[i].y);
+        }
+    }
+}
+
+
+// function scene1() {
+//     if (points.length === 0) {
+//         wi = height;
+//         for (let i = 0; i < n; i++) {
+//             points.push(createVector(random(-width, width), random(-height, height)));
+//         }
+//     }
+
+//     for (let i = 0; i < points.length; i++) {
+//         let angle = noise(points[i].x / 100, points[i].y / 100) * TAU * 50;
+//         points[i].add(createVector(cos(angle) * TAU, sin(angle) * TAU));
+
+//         if (abs(points[i].x) > wi || abs(points[i].y) > wi) {
+//             points[i] = createVector(random(-width, width), random(-height, height));
+//         } else {
+//             stroke(255, 150);
+//             point(points[i].x, points[i].y);
+//         }
+//     }
+// }

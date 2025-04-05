@@ -342,7 +342,8 @@ function scene8() {
 }
 
 
-let explosion3; 
+
+let explosion2bis; 
 
 function scene9() {
     background(0);
@@ -352,9 +353,31 @@ function scene9() {
     displayText("Particles collide chaotically, fusing together under immense pressure."); // Affiche du texte
     pop();
 
+
+    if (!explosion2bis) {
+        let clonedFromExplosion = explosion2.points.map(p => p.copy());  // Cloner les points de l'explosion 2
+        explosion2bis = new Explosion2bis(clonedFromExplosion);  // Initialiser explosion2bis
+    }
+
+    // Mettre à jour l'explosion (les points sont mis à jour ici)
+    explosion2bis.update();
+
+}
+    
+
+let explosion3; 
+
+function scene10() {
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("The ballet of dust is shattered. In its place, a dense,  \n solid core begins to form, compressed by forces it cannot comprehend."); // Affiche du texte
+    pop();
+
     if (!explosion3) {
-        let clonedFromExplosion = explosion.points.map(p => p.copy());
-        explosion3 = new Explosion3(clonedFromExplosion);
+        let clonedFromExplosion = explosion2.points.map(p => p.copy()); // Utiliser les points de la scène 8
+        explosion3 = new Explosion3(clonedFromExplosion);  // Créer Explosion3 avec les mêmes points
     }
 
     explosion3.update();
@@ -362,43 +385,163 @@ function scene9() {
     // Affichage des particules
     for (let pt of explosion3.points) {
         stroke(255, 255);
-        point(pt.pos.x, pt.pos.y); // Affiche chaque particule à sa position
+        //point(pt.pos.x, pt.pos.y); // Affiche chaque particule à sa position
+        point(pt.x, pt.y); // Afficher chaque point
+    }
+
+}
+
+
+
+
+let meteor = [];
+
+
+function scene11() {
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("In the wake of the storm, the dust cloud is fading away. Where there was once only drifting nothingness, \n there is now something, a meteorite, raw and unpolished."); // Affiche du texte
+    pop();
+
+    // Créer de nouvelles météorites si nécessaire
+    if (meteor.length === 0) {
+        for (let i = 0; i < 100; i++) {
+            meteor.push(new Meteor(random(width), random(height)));
+        }
+    }
+
+    // Mettre à jour et dessiner les météorites
+    for (let i = 0; i < meteor.length; i++) {
+        meteor[i].update();
+        meteor[i].display();
+        meteor[i].checkRebirth(); // Vérifie si une particule doit être recréée
 
     }
 
 
+    if (points.length === 0) {
+        wi = height; // Taille du champ de particules
+        // Crée les points une fois au début
+        for (let i = 0; i < n; i++) {
+            points.push(createVector(random(-width, width), random(-height, height)));
+        }
+    }
+
+
+
+    for (let i = 0; i < points.length; i++) {
+        let p = points[i];
+
+        // Déplacement des particules en Z pour donner un effet de mouvement
+        p.z -= 2; // Vitesse de déplacement en Z (plus le chiffre est grand, plus la vitesse est lente)
+        
+        // Si la particule sort de l'écran, on la réinitialise
+        if (p.z <= 0) {
+            p.z = random(-500, 300); // Remise à une position aléatoire plus proche
+        }
+
+        // Calcul de la taille et de la transparence en fonction de la position en Z
+        let scale = map(p.z, 50, 300, 2, 0.5); // La taille diminue à mesure que la particule approche
+        let alpha = map(p.z, 50, 300, 255, 0); // L'alpha diminue aussi avec la profondeur
+
+        // Affichage de la particule avec la perspective
+        noStroke();
+        fill(255, alpha);
+        ellipse(p.x, p.y, scale, scale); // Utilisation d'un ellipse pour la particule
+    }
 }
 
 
-
-
-function scene10() {
-
-
-}
-
-function scene11() {
-
-
-}
+let lineMvnt = [];
+let speed = 7;
 
 function scene12() {
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("Small, fragile, yet imbued with the momentum of the cataclysm that forged it. Pulsar is born. \n And the universe, which had so long ignored its existence, has now cast it into motion.");
+    pop();
 
 
+    if (meteor.length === 0) {
+        for (let i = 0; i < 100; i++) {
+            meteor.push(new Meteor(random(width), random(height)));
+        }
+    }
+
+    // Mettre à jour et dessiner les météorites
+    for (let i = 0; i < meteor.length; i++) {
+        meteor[i].update();
+        meteor[i].display();
+        meteor[i].checkRebirth(); // Vérifie si une particule doit être recréée
+
+    }
+
+
+    if (lineMvnt.length === 0 && points.length > 0) {
+        for (let i = 0; i < points.length; i++) {
+            let p = points[i];
+            let m = new MvntCiel();
+            m.x = p.x;
+            m.y = p.y;
+            m.z = random(width / 2);
+            m.pz = m.z;
+            lineMvnt.push(m);
+        }
+    }
+
+    // Mise à jour et affichage des lignes
+    push();
+    translate(width / 2, height / 2);   
+
+    // Boucle inversée pour permettre les suppressions sécurisées
+    for (let i = lineMvnt.length - 1; i >= 0; i--) {
+        lineMvnt[i].update();
+        if (lineMvnt[i].outOfBounds) {
+            lineMvnt.splice(i, 1); // supprimer les particules qui sortent
+        } else {
+            lineMvnt[i].show();
+        }
+    }
+
+    // Ajouter des particules si on est en dessous du seuil
+    while (lineMvnt.length < n) {
+        lineMvnt.push(new MvntCiel());
+    }
+
+    pop();
 }
 
 function scene13() {
-
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("Gravitational forces pull and twist its trajectory, it travels and discorver lifeless planets or hostile moons. \n Pulled by unseen hands, Pulsar is thrown into the void.");
+    pop();
 
 }
 
 function scene14() {
-
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText(""); // Affiche du texte
+    pop();
 
 }
 
 function scene15() {
-
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText(""); // Affiche du texte
+    pop();
 
 }
 

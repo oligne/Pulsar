@@ -1,32 +1,32 @@
 const scenes = [
     { text: "sc01_Entree", audio: "audio/universe1.mp3", sketch: scene1 },
 
-    { text: "sc02_Situation Intiale", audio: "audio/universe1.mp3", sketch: scene2 },
-    { text: "sc_03_Situation Intiale", audio: "audio/universe1.mp3", sketch: scene3 },
-    { text: "sc04_Situation Intiale", audio: "audio/universe1.mp3", sketch: scene4 },
-    { text: "sc05_Situation Intiale", audio: "audio/universe1.mp3", sketch: scene5 },
+    // { text: "sc02_Situation Intiale", audio: "audio/universe1.mp3", sketch: scene2 },
+    // { text: "sc_03_Situation Intiale", audio: "audio/universe1.mp3", sketch: scene3 },
+    // { text: "sc04_Situation Intiale", audio: "audio/universe1.mp3", sketch: scene4 },
+    // { text: "sc05_Situation Intiale", audio: "audio/universe1.mp3", sketch: scene5 },
 
-    { text: "sc06_TwistTurn", audio: "audio/universe1.mp3", sketch: scene6 },
-    { text: "sc07_TwistTurn", audio: "audio/universe2.mp3", sketch: scene7 },
-    { text: "sc08_TwistTurn", audio: "audio/universe2.mp3", sketch: scene8 },
-    { text: "sc09_TwistTurn", audio: "audio/universe2.mp3", sketch: scene9 },
-    { text: "sc10_TwistTurn", audio: "audio/universe2.mp3", sketch: scene10 },
+    // { text: "sc06_TwistTurn", audio: "audio/universe1.mp3", sketch: scene6 },
+    // { text: "sc07_TwistTurn", audio: "audio/universe2.mp3", sketch: scene7 },
+    // { text: "sc08_TwistTurn", audio: "audio/universe2.mp3", sketch: scene8 },
+    // { text: "sc09_TwistTurn", audio: "audio/universe2.mp3", sketch: scene9 },
+    // { text: "sc10_TwistTurn", audio: "audio/universe2.mp3", sketch: scene10 },
 
-    { text: "sc11_Transition", audio: "audio/universe2.mp3", sketch: scene11 },
-    { text: "sc12_Transition", audio: "audio/universe2.mp3", sketch: scene12 },
-    { text: "sc13_Transition", audio: "audio/universe2.mp3", sketch: scene13 },
-    { text: "sc14_Transition", audio: "audio/universe2.mp3", sketch: scene14 },
+    // { text: "sc11_Transition", audio: "audio/universe2.mp3", sketch: scene11 },
+    // { text: "sc12_Transition", audio: "audio/universe2.mp3", sketch: scene12 },
+    // { text: "sc13_Transition", audio: "audio/universe2.mp3", sketch: scene13 },
+    // { text: "sc14_Transition", audio: "audio/universe2.mp3", sketch: scene14 },
 
-    { text: "sc15_Shift1", audio: "audio/universe2.mp3", sketch: scene15 },
-    { text: "sc16_Shift1", audio: "audio/universe2.mp3", sketch: scene16 },
-    { text: "sc17_Shift1", audio: "audio/universe2.mp3", sketch: scene17 },
-    { text: "sc18_Shift1", audio: "audio/universe2.mp3", sketch: scene18 },
-    { text: "sc19_Shift1", audio: "audio/universe2.mp3", sketch: scene19 },
+    // { text: "sc15_Shift1", audio: "audio/universe2.mp3", sketch: scene15 },
+    // { text: "sc16_Shift1", audio: "audio/universe2.mp3", sketch: scene16 },
+    // { text: "sc17_Shift1", audio: "audio/universe2.mp3", sketch: scene17 },
+    // { text: "sc18_Shift1", audio: "audio/universe2.mp3", sketch: scene18 },
+    // { text: "sc19_Shift1", audio: "audio/universe2.mp3", sketch: scene19 },
     { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene21 },
     { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene22 },
-    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene22 },
     { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene23 },
-    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene24 }
+    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene24 },
+    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene25 }
 
 ];
 
@@ -52,6 +52,15 @@ function scene1() {
         styleButton(enterButton);
         enterButton.mousePressed(loadScene);
     }
+
+    push();
+        translate(50, 100);
+        displayText2("Pulsar, a dust story");
+    pop();
+    push(); 
+        translate(50, 130);
+        displayText3("Coline Jousset, Avril 2025");
+    pop(); 
 
 
 if (points.length === 0) {
@@ -929,10 +938,17 @@ function scene20() {
 }
 
 
+let backgroundDist;
+let sphereAlpha;
+let earthAlphaGfx;
+let alphadist; 
 
 
 function scene21() {
-    background(0);
+    backgroundDist = map(distance, 0, 1000, 0, 255);
+    earthAlphaGfx = createGraphics(earth.width, earth.height);
+    earthAlphaGfx.clear(); // Fond transparent pour le graphique
+    background(backgroundDist);
     push();
     translate(0, 300);
     noStroke();
@@ -955,7 +971,7 @@ function scene21() {
 
         targetDistance = 1300;
         updateDistance();
-
+    
 
         push();
 
@@ -983,10 +999,9 @@ function scene21() {
     pop();
 
 
+
     console.log(distance);
-
-
-
+    console.log(backgroundDist);
 
 }
 
@@ -1000,6 +1015,9 @@ function scene22() {
     noStroke();
     displayText("");
     pop();
+
+    ciel(); 
+
 
 
 }

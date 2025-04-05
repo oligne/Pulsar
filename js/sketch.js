@@ -97,6 +97,30 @@ function displayText(txt) {
     pop(); 
 }
 
+function displayText2(txt) {
+    // Choisir la couleur du texte
+    push(); 
+    fill(255, 255, 255); // Blanc
+    textSize(20); // Taille du texte
+    textFont(myFont); // Choisir une police
+    textAlign(CENTER, CENTER); // Centrer le texte
+    text(txt, width / 2, height / 2); // Afficher le texte au centre de l'écran
+    strokeWeight(0);
+    pop(); 
+}
+
+function displayText3(txt) {
+    // Choisir la couleur du texte
+    push(); 
+    fill(255, 255, 255); // Blanc
+    textSize(14); // Taille du texte
+    textFont(myFont); // Choisir une police
+    textAlign(CENTER, CENTER); // Centrer le texte
+    text(txt, width / 2, height / 2); // Afficher le texte au centre de l'écran
+    strokeWeight(0);
+    pop(); 
+}
+
 function styleButton(button) {
     // Appliquer les mêmes styles que pour displayText
     button.style('font-size', '32px'); // Taille du texte du bouton

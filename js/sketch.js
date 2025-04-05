@@ -1,8 +1,14 @@
+let earth, moon;
+
+
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    myFont = loadFont("typo.ttf");
+    createCanvas(windowWidth, windowHeight, WEBGL);
     background(30);
     loadScene(0);
-
+    
+    earth = loadImage("assets/earth.jpg");
+    moon = loadImage("assets/moon.jpg");
 
 } 
 
@@ -10,6 +16,7 @@ function setup() {
 
 function draw() {
     background(0, 2000); // Légère persistance
+    updateWebGL(); 
     let scene = scenes[currentScene];
 
     if (scene.sketch) {
@@ -71,7 +78,10 @@ function startScene() {
 
 }
 
+function updateWebGL() {
+    translate(windowWidth/2*(-1),windowHeight/2*(-1))   
 
+}
 
 //////BOUTON ENTREE/////////
 
@@ -80,7 +90,7 @@ function displayText(txt) {
     push(); 
     fill(255, 255, 255); // Blanc
     textSize(32); // Taille du texte
-    textFont('Georgia'); // Choisir une police
+    textFont(myFont); // Choisir une police
     textAlign(CENTER, CENTER); // Centrer le texte
     text(txt, width / 2, height / 2); // Afficher le texte au centre de l'écran
     strokeWeight(0);
@@ -354,10 +364,11 @@ class Meteor {
 
 
 class MvntCiel {
-    constructor() {
-        this.x = random(-width / 2, width / 2);
-        this.y = random(-height / 2, height / 2);
-        this.z = random(width / 2);
+    constructor(p) {
+        // Utiliser les coordonnées des points existants pour initialiser les particules
+        this.x = p.x;
+        this.y = p.y;
+        this.z = random(width / 2); // La profondeur initiale est choisie aléatoirement
         this.pz = this.z;
     }
 
@@ -382,10 +393,163 @@ class MvntCiel {
     
         // Alpha et taille en fonction de la profondeur
         let alpha = map(this.z, 0, width / 2, 255, 0);  // proche = opaque
-        let sw = map(this.z, 0, width / 2, 3, 0.2);      // proche = épais
+        let sw = map(this.z, 2, width / 2, 3, 0.2);      // proche = épais
     
         stroke(255, alpha);
         strokeWeight(sw);
         line(px, py, sx, sy);
     }
 }
+
+
+///SCENE 13 + 14
+
+
+
+function ciel() {
+
+    if (points.length === 0) {
+        for (let i = 0; i < n; i++) {
+            points.push(createVector(random(-width, width), random(-height, height)));
+        }
+    }
+
+
+    if (lineMvnt.length === 0 && points.length > 0) {
+        for (let i = 0; i < points.length; i++) {
+            let p = points[i];
+            if (p && p.x !== undefined && p.y !== undefined) {  // Vérifier que p est défini
+                let m = new MvntCiel(p); // Passer le point existant comme paramètre
+                lineMvnt.push(m);
+            }
+        } 
+    }
+
+    
+    push();
+    translate(width / 2, height / 2);   
+
+    // Boucle inversée pour permettre les suppressions sécurisées
+    for (let i = lineMvnt.length - 1; i >= 0; i--) {
+        lineMvnt[i].update();
+        if (lineMvnt[i].outOfBounds) {
+            lineMvnt.splice(i, 1); // supprimer les particules qui sortent
+        } else {
+            lineMvnt[i].show();
+        }
+    }
+
+    // Ajouter des particules si on est en dessous du seuil
+    while (lineMvnt.length < n) {
+        let randomPoint = points[floor(random(points.length))];
+        if (randomPoint && randomPoint.x !== undefined && randomPoint.y !== undefined) {
+            lineMvnt.push(new MvntCiel(randomPoint)); // Passer un point valide
+        }
+    }
+
+    pop();
+}
+
+
+function meteorfunction() {
+
+if (meteor.length === 0) {
+    for (let i = 0; i < 100; i++) {
+        meteor.push(new Meteor(random(width), random(height)));
+    }
+}
+
+
+// Mettre à jour et dessiner les météorites
+for (let i = 0; i < meteor.length; i++) {
+    meteor[i].update();
+    meteor[i].display();
+    meteor[i].checkRebirth(); // Vérifie si une particule doit être recréée
+
+}
+
+} 
+
+
+///SCENE 19
+
+
+  function updateSatellites(maxSatellites) {
+    // Ajouter si pas assez
+    while (satellites.length < maxSatellites) {
+      satellites.push(new Satellite());
+    }
+  
+    // Retirer si trop
+    while (satellites.length > maxSatellites) {
+      satellites.pop();
+    }
+  
+    // Update et display
+    for (let s of satellites) {
+      s.update();
+      s.display();
+    }
+  }
+
+  class Satellite {
+    constructor() {
+      this.angle = random(TWO_PI);
+      this.orbitSpeed = random(0.005, 0.015);
+      this.radius = random(radiusSat);
+      this.size = random(1, 3);
+      this.orbitInclination = random(-PI / 6, PI / 6);
+      this.shiny = 80 ; // 30% chance d'être brillant
+    }
+  
+    update() {
+      this.angle += this.orbitSpeed;
+    }
+  
+    display() {
+      this.update();
+  
+      let x = cos(this.angle) * this.radius;
+      let z = sin(this.angle) * this.radius;
+      let y = sin(this.angle * 2) * this.radius * 0.1;
+  
+      push();
+      rotateX(this.orbitInclination);
+      translate(x, y, z);
+  
+      if (this.shiny) {
+        stroke(255, 255, 240, 200);
+        strokeWeight(1.5);
+        let len = map(sin(frameCount * 0.1), -1, 1, 1, 5);
+  
+        // Rayons brillants dans 3 directions
+        line(0, -len, 0, 0, -len * 2, 0);
+        line(0, len, 0, 0, len * 2, 0);
+        line(-len, 0, 0, -len * 2, 0, 0);
+        line(len, 0, 0, len * 2, 0, 0);
+        line(0, 0, -len, 0, 0, -len * 2);
+        line(0, 0, len, 0, 0, len * 2);
+  
+        strokeWeight(1);
+        point(0, 0, 0);
+      } else {
+        noStroke();
+        fill(255, 255, 200);
+        sphere(this.size);
+      }
+  
+      pop();
+    }
+  }
+
+  ///SCENE 16 - 17 - 18 - 19 - 20 
+
+  function updateDistance() {
+    if (distance < targetDistance) {
+      distance += distanceSpeed;
+      if (distance > targetDistance) distance = targetDistance; // éviter de dépasser
+    } else if (distance > targetDistance) {
+      distance -= distanceSpeed;
+      if (distance < targetDistance) distance = targetDistance;
+    }
+  }

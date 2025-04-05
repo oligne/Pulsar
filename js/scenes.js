@@ -22,12 +22,17 @@ const scenes = [
     { text: "sc17_Shift1", audio: "audio/universe2.mp3", sketch: scene17 },
     { text: "sc18_Shift1", audio: "audio/universe2.mp3", sketch: scene18 },
     { text: "sc19_Shift1", audio: "audio/universe2.mp3", sketch: scene19 },
-    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene20 }
+    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene21 },
+    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene22 },
+    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene22 },
+    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene23 },
+    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene24 }
+
 ];
 
 
 
-
+let myFont; 
 let currentScene = 0;
 let sound;
 
@@ -78,6 +83,7 @@ function scene2() {
     push();
     translate(0, 300)
     noStroke(); 
+    textFont(myFont);
     displayText("Once upon a time, somewhere into the large void of the universe...");
     pop();
 
@@ -113,6 +119,7 @@ function scene3() {
     push();
     translate(0, 300)
     noStroke(); 
+    textFont(myFont);
     displayText("Far, far away of everything that we know, \n some dust powder was flowting endlessly through the nothingness of the sky.");
     pop(); 
    
@@ -420,9 +427,10 @@ function scene11() {
 
     }
 
+    push();
+    translate(width / 2, height / 2);   
 
     if (points.length === 0) {
-        wi = height; // Taille du champ de particules
         // Crée les points une fois au début
         for (let i = 0; i < n; i++) {
             points.push(createVector(random(-width, width), random(-height, height)));
@@ -451,11 +459,13 @@ function scene11() {
         fill(255, alpha);
         ellipse(p.x, p.y, scale, scale); // Utilisation d'un ellipse pour la particule
     }
+
+    pop();
 }
 
-
-let lineMvnt = [];
 let speed = 7;
+let lineMvnt = [];
+
 
 function scene12() {
     background(0);
@@ -464,13 +474,14 @@ function scene12() {
     noStroke();
     displayText("Small, fragile, yet imbued with the momentum of the cataclysm that forged it. Pulsar is born. \n And the universe, which had so long ignored its existence, has now cast it into motion.");
     pop();
-
+ 
 
     if (meteor.length === 0) {
         for (let i = 0; i < 100; i++) {
             meteor.push(new Meteor(random(width), random(height)));
         }
     }
+
 
     // Mettre à jour et dessiner les météorites
     for (let i = 0; i < meteor.length; i++) {
@@ -480,20 +491,26 @@ function scene12() {
 
     }
 
+    
+
+    if (points.length === 0) {
+        for (let i = 0; i < n; i++) {
+            points.push(createVector(random(-width, width), random(-height, height)));
+        }
+    }
+
 
     if (lineMvnt.length === 0 && points.length > 0) {
         for (let i = 0; i < points.length; i++) {
             let p = points[i];
-            let m = new MvntCiel();
-            m.x = p.x;
-            m.y = p.y;
-            m.z = random(width / 2);
-            m.pz = m.z;
-            lineMvnt.push(m);
-        }
+            if (p && p.x !== undefined && p.y !== undefined) {  // Vérifier que p est défini
+                let m = new MvntCiel(p); // Passer le point existant comme paramètre
+                lineMvnt.push(m);
+            }
+        } 
     }
 
-    // Mise à jour et affichage des lignes
+    
     push();
     translate(width / 2, height / 2);   
 
@@ -509,11 +526,17 @@ function scene12() {
 
     // Ajouter des particules si on est en dessous du seuil
     while (lineMvnt.length < n) {
-        lineMvnt.push(new MvntCiel());
+        let randomPoint = points[floor(random(points.length))];
+        if (randomPoint && randomPoint.x !== undefined && randomPoint.y !== undefined) {
+            lineMvnt.push(new MvntCiel(randomPoint)); // Passer un point valide
+        }
     }
 
     pop();
 }
+
+
+
 
 function scene13() {
     background(0);
@@ -523,15 +546,66 @@ function scene13() {
     displayText("Gravitational forces pull and twist its trajectory, it travels and discorver lifeless planets or hostile moons. \n Pulled by unseen hands, Pulsar is thrown into the void.");
     pop();
 
+    meteorfunction(); 
+
+    if (speed < 20) {
+        speed += 0.1; // ou un facteur plus lent si tu veux
+    }
+
+   
+
+
+    if (lineMvnt.length === 0 && points.length > 0) {
+        for (let i = 0; i < points.length; i++) {
+            let p = points[i];
+            if (p && p.x !== undefined && p.y !== undefined) {  // Vérifier que p est défini
+                let m = new MvntCiel2(p); // Passer le point existant comme paramètre
+                lineMvnt.push(m);
+            }
+        } 
+    }
+
+    
+    push();
+    translate(width / 2, height / 2);   
+
+    // Boucle inversée pour permettre les suppressions sécurisées
+    for (let i = lineMvnt.length - 1; i >= 0; i--) {
+        lineMvnt[i].update();
+        if (lineMvnt[i].outOfBounds) {
+            lineMvnt.splice(i, 1); // supprimer les particules qui sortent
+        } else {
+            lineMvnt[i].show();
+        }
+    }
+
+    // Ajouter des particules si on est en dessous du seuil
+    while (lineMvnt.length < n) {
+        let randomPoint = points[floor(random(points.length))];
+        if (randomPoint && randomPoint.x !== undefined && randomPoint.y !== undefined) {
+            lineMvnt.push(new MvntCiel2(randomPoint)); // Passer un point valide
+        }
+    }
+
+    pop();
 }
+     
+
+
 
 function scene14() {
     background(0);
     push();
     translate(0, 300);
     noStroke();
-    displayText(""); // Affiche du texte
+    displayText("Its path is no longer its own and It tumbles, helpless, across the cold expanse."); // Affiche du texte
     pop();
+
+    meteorfunction(); 
+    ciel(); 
+
+
+    
 
 }
 
@@ -540,32 +614,519 @@ function scene15() {
     push();
     translate(0, 300);
     noStroke();
-    displayText(""); // Affiche du texte
+    displayText("No voice calls for it, no force welcomes it. It’s a passenger in the endless dark."); // Affiche du texte
     pop();
+
+    //meteorfunction(); 
+
+    ciel(); 
+
+
+    if (speed > 13) {
+        speed -= 0.1; // ou un facteur plus lent si tu veux
+    }
+
+
 
 }
 
+
+
+
+
+let satellites = [];
+let maxSatellites = 2;
+let satellitesInitialized = false;
+let radiusSat;
+
+let distance = -5000; 
+let targetDistance = -5000;
+let distanceSpeed = 10;
+
+
 function scene16() {
+background(0);
+    push();
+        translate(0, 300);
+        noStroke();
+        displayText("Yet, far ahead, something shimmers. Not the cold glint of stars, nor the distant glow of nebulae. \n A world, small yet radiant, turns in the dark."); // Affiche du texte
+    pop();
+
+    ciel(); 
+
+    translate(windowWidth/2*(1),windowHeight/2*(1))   
+
+    push(); // mini système Terre-Lune
+            // Position éloignée dans l’univers
+            translate(0, 0, distance);
+        
+
+            targetDistance = -3000;
+            updateDistance();
+
+            // Mini Terre
+        push();
+
+            rotateY(millis()/10000); // rotation lente
+            texture(earth);
+            noStroke(); 
+            sphere(40); // plus petite
+            
+        pop();
+            // Mini Lune en orbite
+            let moonAngle = frameCount * 0.01;
+            let moonRadius = 100;
+            let moonX = cos(moonAngle) * moonRadius;
+            let moonZ = sin(moonAngle) * moonRadius;
+        
+            push();
+                translate(moonX, 0, moonZ);
+                noStroke(); 
+                texture(moon);
+                sphere(10);
+            pop();
+    
+     pop();
 
 
+radiusSat = (0, 10);
+let maxSatellites = 2; // selon la scène
+
+updateSatellites(maxSatellites);
+console.log(distance);
 }
 
 function scene17() {
+    background(0);
+    push();
+        translate(0, 300);
+        noStroke();
+        displayText("Around it, tiny lights flicker, circling like fireflies caught in an unseen current. \n A pulse of movement. A sign of something more. Dusty watches, captivated."); // Affiche du texte
+    pop();
 
+    if (speed < 20) {
+        speed += 0.1; // ou un facteur plus lent si tu veux
+    }
+
+    ciel(); 
+
+    translate(windowWidth/2*(1),windowHeight/2*(1))   
+
+    push(); // mini système Terre-Lune
+        // Position éloignée dans l’univers
+        translate(0, 0, distance);
+    
+
+        targetDistance = -1000;
+        updateDistance();
+
+
+        // Mini Terre
+        push();
+
+            rotateY(millis()/10000); // rotation lente
+            texture(earth);
+            noStroke(); 
+            sphere(40); // plus petite
+            
+        pop();
+    
+        // Mini Lune en orbite
+        let moonAngle = frameCount * 0.01;
+        let moonRadius = 100;
+        let moonX = cos(moonAngle) * moonRadius;
+        let moonZ = sin(moonAngle) * moonRadius;
+    
+        push();
+            translate(moonX, 0, moonZ);
+            noStroke(); 
+            texture(moon);
+            sphere(10);
+        pop();
+
+    pop();
+
+ radiusSat = (0, 30); 
+  let maxSatellites = 5; // selon la scène
+
+  updateSatellites(maxSatellites);
+  console.log(distance);
 
 }
+
+
+
 
 function scene18() {
+    background(0);
+    push();
+        translate(0, 300);
+        noStroke();
+        displayText("In the distance, the meteorite spots a blue planet surrounded by satellites dancing like fireflies. \n This comforting vision contrasts with the cold, hostile universe it has crossed.");
+    pop();
+    
+
+    if (speed < 25) {
+        speed += 0.1; // ou un facteur plus lent si tu veux
+    }
+
+    ciel(); 
+
+    translate(windowWidth/2*(1),windowHeight/2*(1))   
 
 
-}
+
+    push(); 
+
+        translate(0, 0, distance);
+
+        targetDistance = 0;
+        updateDistance();
+    
+        push();
+
+            rotateY(millis()/10000); // rotation lente
+            texture(earth);
+            noStroke(); 
+            sphere(40); // plus petite
+            
+            pop();
+            
+                let moonAngle = frameCount * 0.01;
+                let moonRadius = 100;
+                let moonX = cos(moonAngle) * moonRadius;
+                let moonZ = sin(moonAngle) * moonRadius;
+            
+            push();
+
+            translate(moonX, 0, moonZ);
+            noStroke(); 
+            texture(moon);
+            sphere(10);
+
+        pop();
+
+    pop();
+
+        
+    radiusSat = (60, 100); 
+  let maxSatellites = 30; // selon la scène
+
+  updateSatellites(maxSatellites);
+
+console.log(distance);
+
+
+}  
 
 function scene19() {
+    background(0);
+        push();
+        translate(0, 300);
+        noStroke();
+        displayText("The blue sphere swells before Dusty’s eyes, vast and alive. \n Swirls of white curl across its surface, shifting, breathing. Oceans glisten beneath the sun, a deep, endless blue. ");
+    pop();
+
+    if (speed < 30) {
+        speed += 0.1; // ou un facteur plus lent si tu veux
+    }
+    ciel(); 
+    translate(windowWidth/2*(1),windowHeight/2*(1))   
+
+    push(); 
+    translate(0, 0, distance);
+
+    targetDistance = 500;
+    updateDistance();
+    
+        push();
+
+            rotateY(millis()/10000); // rotation lente
+            texture(earth);
+            noStroke(); 
+            sphere(40); // plus petite
+        
+        pop();
+    
+        let moonAngle = frameCount * 0.01;
+        let moonRadius = 100;
+        let moonX = cos(moonAngle) * moonRadius;
+        let moonZ = sin(moonAngle) * moonRadius;
+    
+        push();
+
+            translate(moonX, 0, moonZ);
+            noStroke(); 
+            texture(moon);
+            sphere(10);
+
+        pop();
+
+    pop();
+
+
+    radiusSat = (60, 100); 
+  let maxSatellites = 30; // selon la scène
+
+  updateSatellites(maxSatellites);
+
+  console.log(distance);
 
 
 }
 
+
+
 function scene20() {
+    background(0);
+    push();
+    translate(0, 500);
+    noStroke();
+    displayText("From the dark, Pulsar has never seen anything so luminous. Faster now, it plunges toward the unknown. Closer.");
+    pop();
+
+    if (speed < 50) {
+        speed += 0.1; // ou un facteur plus lent si tu veux
+    }
+    ciel(); 
+    translate(windowWidth/2*(1),windowHeight/2*(1))   
+
+    push(); 
+
+        translate(0, 0, distance);
+
+        targetDistance = 800;
+        updateDistance();
+
+        push();
+
+            rotateY(millis()/10000); // rotation lente
+            texture(earth);
+            noStroke(); 
+            sphere(40); // plus petite
+        
+        pop();
+
+        let moonAngle = frameCount * 0.01;
+        let moonRadius = 100;
+        let moonX = cos(moonAngle) * moonRadius;
+        let moonZ = sin(moonAngle) * moonRadius;
+
+        push();
+
+            translate(moonX, 0, moonZ);
+            noStroke(); 
+            texture(moon);
+            sphere(10);
+
+        pop();
+
+    pop();
+
+
+    console.log(distance);
+
+}
+
+
+
+
+function scene21() {
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("Closer.");
+    pop();
+
+
+    if (speed < 50) {
+        speed += 0.1; // ou un facteur plus lent si tu veux
+    }
+
+ 
+    ciel(); 
+
+    translate(windowWidth/2*(1),windowHeight/2*(1))   
+
+    push(); 
+
+        translate(0, 0, distance);
+
+        targetDistance = 1300;
+        updateDistance();
+
+
+        push();
+
+            rotateY(millis()/10000); // rotation lente
+            texture(earth);
+            noStroke(); 
+            sphere(40); // plus petite
+        
+        pop();
+
+        let moonAngle = frameCount * 0.01;
+        let moonRadius = 100;
+        let moonX = cos(moonAngle) * moonRadius;
+        let moonZ = sin(moonAngle) * moonRadius;
+
+        push();
+
+            translate(moonX, 0, moonZ);
+            noStroke(); 
+            texture(moon);
+            sphere(10);
+
+        pop();
+
+    pop();
+
+
+    console.log(distance);
+
+
+
+
+}
+
+
+
+
+function scene22() {
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("");
+    pop();
+
+
+}
+
+
+
+
+function scene23() {
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("");
+    pop();
+
+
+}
+
+
+
+
+function scene24() {
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("");
+    pop();
+
+
+}
+
+
+
+
+function scene25() {
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("");
+    pop();
+
+
+}
+
+
+
+function scene26() {
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("");
+    pop();
+
+
+}
+
+function scene27() {
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("");
+    pop();
+
+
+}
+
+function scene28() {
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("");
+    pop();
+
+
+}
+
+
+function scene29() {
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("");
+    pop();
+
+
+}
+
+
+function scene30() {
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("");
+    pop();
+
+
+}
+
+
+
+function scene31() {
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("");
+    pop();
+
+
+}
+
+
+
+function scene32() {
+    background(0);
+    push();
+    translate(0, 300);
+    noStroke();
+    displayText("");
+    pop();
 
 
 }

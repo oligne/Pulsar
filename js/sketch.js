@@ -8,8 +8,11 @@ function setup() {
     loadScene(0);
     
     earth = loadImage("assets/earth.jpg");
+    earth2 = loadImage("assets/earth2.jpg");
     moon = loadImage("assets/moon.jpg");
 
+
+   
 } 
 
 
@@ -475,6 +478,7 @@ function ciel() {
 }
 
 
+
 function meteorfunction() {
 
 if (meteor.length === 0) {
@@ -577,3 +581,245 @@ for (let i = 0; i < meteor.length; i++) {
       if (distance < targetDistance) distance = targetDistance;
     }
   }
+
+
+  ///SCENE 22
+
+  class MvntCiel2 {
+    constructor(p) {
+        // Utiliser les coordonnées des points existants pour initialiser les particules
+        this.x = p.x;
+        this.y = p.y;
+        this.z = random(width / 2); // La profondeur initiale est choisie aléatoirement
+        this.pz = this.z;
+    }
+
+    update() {
+        this.z -= speed;
+        if (this.z < 1) {
+            this.z = width / 2;
+            this.pz = this.z;
+            this.x = random(-width / 2, width / 2);
+            this.y = random(-height / 2, height / 2);
+        }
+    
+        // Ajouter un effet d'arrondi :
+        let angle = atan2(this.y, this.x);
+        let radius = sqrt(this.x * this.x + this.y * this.y);
+    
+        // Déformation pour courber les lignes (ajuste les valeurs selon ton goût)
+        let distortion = map(this.z, 0, width / 2, 0.4, 0.3); 
+        this.x = cos(angle) * radius * distortion;
+        this.y = sin(angle) * radius * distortion;
+
+        // let rotationSpeed = 0.05; // plus ou moins fort
+        // angle += this.z * rotationSpeed;
+    }
+
+    show() {
+        let sx = map(this.x / this.z, 0, 1, 0, width / 2);
+        let sy = map(this.y / this.z, 0, 1, 0, height / 2);
+    
+        let px = map(this.x / this.pz, 0, 1, 0, width / 2);
+        let py = map(this.y / this.pz, 0, 1, 0, height / 2);
+    
+        this.pz = this.z;
+    
+        // Alpha et taille en fonction de la profondeur
+        let alpha = map(this.z, 0, width / 2, 255, 0);  // proche = opaque
+        let sw = map(this.z, 2, width / 2, 0.5, 0.001);      // proche = épais
+
+
+        stroke(0, 0, 0, alpha); 
+        //stroke(colorlineciel, alpha);
+        strokeWeight(sw);
+        line(px, py, sx, sy);
+        
+    }
+}
+
+
+  function ciel2() {
+
+    if (points.length === 0) {
+        for (let i = 0; i < n; i++) {
+            points.push(createVector(random(-width, width), random(-height, height)));
+        }
+    }
+
+
+    if (lineMvnt.length === 0 && points.length > 0) {
+        for (let i = 0; i < points.length; i++) {
+            let p = points[i];
+            if (p && p.x !== undefined && p.y !== undefined) {  // Vérifier que p est défini
+                let m = new MvntCiel2(p); // Passer le point existant comme paramètre
+                lineMvnt.push(m);
+            }
+        } 
+    }
+
+    
+    push();
+    translate(width / 2, height / 2);   
+
+    // Boucle inversée pour permettre les suppressions sécurisées
+    for (let i = lineMvnt.length - 1; i >= 0; i--) {
+        lineMvnt[i].update();
+        if (lineMvnt[i].outOfBounds) {
+            lineMvnt.splice(i, 1); // supprimer les particules qui sortent
+        } else {
+            lineMvnt[i].show();
+        }
+    }
+
+    // Ajouter des particules si on est en dessous du seuil
+    while (lineMvnt.length < n) {
+        let randomPoint = points[floor(random(points.length))];
+        if (randomPoint && randomPoint.x !== undefined && randomPoint.y !== undefined) {
+            lineMvnt.push(new MvntCiel2(randomPoint)); // Passer un point valide
+        }
+    }
+
+    pop();
+
+
+    
+}
+
+
+
+
+
+function displayText4(txt) {
+    // Choisir la couleur du texte
+    push(); 
+    fill(0, 0, 0); // Blanc
+    textSize(32); // Taille du texte
+    textFont(myFont); // Choisir une police
+    textAlign(CENTER, CENTER); // Centrer le texte
+    text(txt, width / 2, height / 2); // Afficher le texte au centre de l'écran
+    strokeWeight(0);
+    pop(); 
+}
+
+
+
+////SCENE 23
+
+
+
+
+
+class Atmo {
+    constructor(x, y, angle, speed) {
+      this.x = x;
+      this.y = y;
+      this.angle = angle;
+      this.speed = speed;
+      this.life = 200; // Durée de vie de la particule
+      this.size = random(3, 10); // Taille aléatoire des particules
+    }
+  
+    update() {
+      // Déplacer la particule en fonction de la direction et de la vitesse
+      this.x += cos(this.angle) * this.speed;
+      this.y += sin(this.angle) * this.speed;
+  
+      // Réduire la durée de vie de la particule
+      this.life -= 1;
+    }
+  
+    display() {
+      let col = color(255, 255, 255, this.life); // Couleur des particules avec un effet de dégradé
+      fill(col);
+      noStroke();
+      ///stroke(255);
+      ellipse(this.x, this.y, this.size);
+    }
+  
+    isOffScreen() {
+        return (
+          this.x < -50 || this.x > width + 50 ||
+          this.y < -50 || this.y > height + 50 ||
+          this.life <= 0
+        );
+      }
+  }
+  
+
+  function createAtmo(centerX, centerY, circleRadius) {
+    // Angle autour du cercle
+    let angle = random(-PI/2.5);
+  
+    // Position sur le bord du cercle mobile (rayon fixe de 25)
+    let x = centerX + cos(angle) * circleRadius / 2;
+    let y = centerY + sin(angle) * circleRadius / 2;
+  
+    // Direction radiale (s'éloigne du centre), avec une petite variation
+    let speedAngle = angle + random(-0.3, 0.3); // pour effet rayonnement irrégulier
+    let speed = random(1, 3);
+  
+    let atmoPart = new Atmo(x, y, speedAngle, speed);
+    particles.push(atmoPart);
+  }
+
+
+
+
+
+
+  class Atmo2 {
+    constructor(x, y, angle, speed) {
+      this.x = x;
+      this.y = y;
+      this.angle = angle;
+      this.speed = speed;
+      this.life = 100; // Durée de vie de la particule
+      this.size = random(0.01, 7); // Taille aléatoire des particules
+    }
+  
+    update() {
+      // Déplacer la particule en fonction de la direction et de la vitesse
+      this.x += cos(this.angle) * this.speed;
+      this.y += sin(this.angle) * this.speed;
+  
+      // Réduire la durée de vie de la particule
+      this.life -= 1;
+    }
+  
+    display() {
+      let col = color(255, 255, 255, this.life); // Couleur des particules avec un effet de dégradé
+      fill(col);
+      stroke(0);
+      ellipse(this.x, this.y, this.size);
+    }
+  
+    isOffScreen() {
+        return (
+          this.x < -50 || this.x > width + 50 ||
+          this.y < -50 || this.y > height + 50 ||
+          this.life <= 0
+        );
+      }
+  }
+  
+
+
+  function createAtmo2(centerX, centerY, circleRadius) {
+    // Angle autour du cercle
+    let angle = random(-PI);
+  
+    // Position sur le bord du cercle mobile (rayon fixe de 25)
+    let x = centerX + cos(angle) * circleRadius / 2;
+    let y = centerY + sin(angle) * circleRadius / 2;
+  
+    // Direction radiale (s'éloigne du centre), avec une petite variation
+    let speedAngle = angle + random(-0.3, 0.3); // pour effet rayonnement irrégulier
+    let speed = random(0.5, 10);
+  
+    let atmoPart2 = new Atmo2(x, y, speedAngle, speed);
+    particles.push(atmoPart2);
+  }
+
+
+

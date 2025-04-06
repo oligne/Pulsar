@@ -1,32 +1,38 @@
 const scenes = [
     { text: "sc01_Entree", audio: "audio/universe1.mp3", sketch: scene1 },
 
-    // { text: "sc02_Situation Intiale", audio: "audio/universe1.mp3", sketch: scene2 },
-    // { text: "sc_03_Situation Intiale", audio: "audio/universe1.mp3", sketch: scene3 },
-    // { text: "sc04_Situation Intiale", audio: "audio/universe1.mp3", sketch: scene4 },
-    // { text: "sc05_Situation Intiale", audio: "audio/universe1.mp3", sketch: scene5 },
+    { text: "sc02_Situation Intiale", audio: "audio/universe2.mp3", sketch: scene2 },
+    { text: "sc_03_Situation Intiale", audio: "audio/universe2.mp3", sketch: scene3 },
+    { text: "sc04_Situation Intiale", audio: "audio/universe2.mp3", sketch: scene4 },
+    { text: "sc05_Situation Intiale", audio: "audio/universe2.mp3", sketch: scene5 },
 
-    // { text: "sc06_TwistTurn", audio: "audio/universe1.mp3", sketch: scene6 },
-    // { text: "sc07_TwistTurn", audio: "audio/universe2.mp3", sketch: scene7 },
-    // { text: "sc08_TwistTurn", audio: "audio/universe2.mp3", sketch: scene8 },
-    // { text: "sc09_TwistTurn", audio: "audio/universe2.mp3", sketch: scene9 },
-    // { text: "sc10_TwistTurn", audio: "audio/universe2.mp3", sketch: scene10 },
+    { text: "sc06_TwistTurn", audio: "audio/universe2.mp3", sketch: scene6 },
+    { text: "sc07_TwistTurn", audio: "audio/universe2.mp3", sketch: scene7 },
+    { text: "sc08_TwistTurn", audio: "audio/universe2.mp3", sketch: scene8 },
+    { text: "sc09_TwistTurn", audio: "audio/universe2.mp3", sketch: scene9 },
+    { text: "sc10_TwistTurn", audio: "audio/universe2.mp3", sketch: scene10 },
 
-    // { text: "sc11_Transition", audio: "audio/universe2.mp3", sketch: scene11 },
-    // { text: "sc12_Transition", audio: "audio/universe2.mp3", sketch: scene12 },
-    // { text: "sc13_Transition", audio: "audio/universe2.mp3", sketch: scene13 },
-    // { text: "sc14_Transition", audio: "audio/universe2.mp3", sketch: scene14 },
+    { text: "sc11_Transition", audio: "audio/universe2.mp3", sketch: scene11 },
+    { text: "sc12_Transition", audio: "audio/universe2.mp3", sketch: scene12 },
+    { text: "sc13_Transition", audio: "audio/universe2.mp3", sketch: scene13 },
+    { text: "sc14_Transition", audio: "audio/universe2.mp3", sketch: scene14 },
 
-    // { text: "sc15_Shift1", audio: "audio/universe2.mp3", sketch: scene15 },
-    // { text: "sc16_Shift1", audio: "audio/universe2.mp3", sketch: scene16 },
-    // { text: "sc17_Shift1", audio: "audio/universe2.mp3", sketch: scene17 },
-    // { text: "sc18_Shift1", audio: "audio/universe2.mp3", sketch: scene18 },
-    // { text: "sc19_Shift1", audio: "audio/universe2.mp3", sketch: scene19 },
+    { text: "sc15_Shift1", audio: "audio/universe2.mp3", sketch: scene15 },
+    { text: "sc16_Shift1", audio: "audio/universe2.mp3", sketch: scene16 },
+    { text: "sc17_Shift1", audio: "audio/universe2.mp3", sketch: scene17 },
+    { text: "sc18_Shift1", audio: "audio/universe2.mp3", sketch: scene18 },
+    { text: "sc19_Shift1", audio: "audio/universe2.mp3", sketch: scene19 },
     { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene21 },
     { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene22 },
     { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene23 },
     { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene24 },
-    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene25 }
+    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene25 },
+    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene26 },
+    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene27 },
+    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene28 },
+    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene28 },
+    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene29 },
+    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene30 }
 
 ];
 
@@ -568,7 +574,7 @@ function scene13() {
         for (let i = 0; i < points.length; i++) {
             let p = points[i];
             if (p && p.x !== undefined && p.y !== undefined) {  // Vérifier que p est défini
-                let m = new MvntCiel2(p); // Passer le point existant comme paramètre
+                let m = new MvntCiel(p); // Passer le point existant comme paramètre
                 lineMvnt.push(m);
             }
         } 
@@ -592,7 +598,7 @@ function scene13() {
     while (lineMvnt.length < n) {
         let randomPoint = points[floor(random(points.length))];
         if (randomPoint && randomPoint.x !== undefined && randomPoint.y !== undefined) {
-            lineMvnt.push(new MvntCiel2(randomPoint)); // Passer un point valide
+            lineMvnt.push(new MvntCiel(randomPoint)); // Passer un point valide
         }
     }
 
@@ -648,8 +654,8 @@ let maxSatellites = 2;
 let satellitesInitialized = false;
 let radiusSat;
 
-let distance = -5000; 
-let targetDistance = -5000;
+let distance = -7000; 
+let targetDistance = -7000;
 let distanceSpeed = 10;
 
 
@@ -670,7 +676,7 @@ background(0);
             translate(0, 0, distance);
         
 
-            targetDistance = -3000;
+            targetDistance = -5000;
             updateDistance();
 
             // Mini Terre
@@ -726,7 +732,7 @@ function scene17() {
         translate(0, 0, distance);
     
 
-        targetDistance = -1000;
+        targetDistance = -2500;
         updateDistance();
 
 
@@ -789,7 +795,7 @@ function scene18() {
 
         translate(0, 0, distance);
 
-        targetDistance = 0;
+        targetDistance = -1000;
         updateDistance();
     
         push();
@@ -843,33 +849,33 @@ function scene19() {
     translate(windowWidth/2*(1),windowHeight/2*(1))   
 
     push(); 
-    translate(0, 0, distance);
+        translate(0, 0, distance);
 
-    targetDistance = 500;
-    updateDistance();
-    
-        push();
-
-            rotateY(millis()/10000); // rotation lente
-            texture(earth);
-            noStroke(); 
-            sphere(40); // plus petite
+        targetDistance = -500;
+        updateDistance();
         
-        pop();
-    
-        let moonAngle = frameCount * 0.01;
-        let moonRadius = 100;
-        let moonX = cos(moonAngle) * moonRadius;
-        let moonZ = sin(moonAngle) * moonRadius;
-    
-        push();
+            push();
+                
+                rotateY(millis()/10000); // rotation lente
+                texture(earth);
+                noStroke(); 
+                sphere(40); // plus petite
+            
+            pop();
+        
+            let moonAngle = frameCount * 0.01;
+            let moonRadius = 100;
+            let moonX = cos(moonAngle) * moonRadius;
+            let moonZ = sin(moonAngle) * moonRadius;
+        
+            push();
 
-            translate(moonX, 0, moonZ);
-            noStroke(); 
-            texture(moon);
-            sphere(10);
+                translate(moonX, 0, moonZ);
+                noStroke(); 
+                texture(moon);
+                sphere(10);
 
-        pop();
+            pop();
 
     pop();
 
@@ -884,6 +890,7 @@ function scene19() {
 
 }
 
+let alphadist; 
 
 
 function scene20() {
@@ -901,10 +908,9 @@ function scene20() {
     translate(windowWidth/2*(1),windowHeight/2*(1))   
 
     push(); 
-
         translate(0, 0, distance);
 
-        targetDistance = 800;
+        targetDistance = 100;
         updateDistance();
 
         push();
@@ -933,7 +939,6 @@ function scene20() {
     pop();
 
 
-    console.log(distance);
 
 }
 
@@ -941,13 +946,10 @@ function scene20() {
 let backgroundDist;
 let sphereAlpha;
 let earthAlphaGfx;
-let alphadist; 
 
 
 function scene21() {
     backgroundDist = map(distance, 0, 1000, 0, 255);
-    earthAlphaGfx = createGraphics(earth.width, earth.height);
-    earthAlphaGfx.clear(); // Fond transparent pour le graphique
     background(backgroundDist);
     push();
     translate(0, 300);
@@ -966,16 +968,18 @@ function scene21() {
     translate(windowWidth/2*(1),windowHeight/2*(1))   
 
     push(); 
-
+        alphadist = map(distance, 200, 700, 255, 0);
         translate(0, 0, distance);
 
-        targetDistance = 1300;
+       
+
+        targetDistance = 1000;
         updateDistance();
-    
 
         push();
 
             rotateY(millis()/10000); // rotation lente
+            tint(255, alphadist);
             texture(earth);
             noStroke(); 
             sphere(40); // plus petite
@@ -988,65 +992,161 @@ function scene21() {
         let moonZ = sin(moonAngle) * moonRadius;
 
         push();
-
             translate(moonX, 0, moonZ);
             noStroke(); 
+            tint(255, alphadist);
             texture(moon);
-            sphere(10);
-
+            sphere(10); 
         pop();
 
     pop();
 
 
 
-    console.log(distance);
-    console.log(backgroundDist);
-
 }
 
+
+
+
+
+
+
+let colorlineciel;
+let points2 = [];
+let lineMvnt2 = [];
 
 
 
 function scene22() {
-    background(0);
+    lineMvnt = [];
+
+    background(255);
     push();
     translate(0, 300);
     noStroke();
-    displayText("");
+    displayText4("The silence breaks. Everything is set to fire.");
     pop();
 
-    ciel(); 
 
+    if (speed < 50) {
+        speed += 1; // ou un facteur plus lent si tu veux
+    }
+
+    if (stroke <= 255) {
+        stroke -= 1;
+    }
+
+    ciel2(); 
+  
+    
 
 
 }
 
 
 
+let overlay;
 
 function scene23() {
-    background(0);
+    lineMvnt = [];
+    background(255);
     push();
-    translate(0, 300);
     noStroke();
-    displayText("");
+    translate(0, 300);
+    displayText4("Air, dense and unyielding, crashes against Dusty’s fragile form. Heat rises, wrapping it in a golden glow.");
     pop();
+
+
+    ciel2(); 
+  
 
 
 }
 
 
+let particles = [];
+let lastX, lastY;
+let smoothX, smoothY;
+let pulsar;
 
 
 function scene24() {
     background(0);
     push();
     translate(0, 300);
+    displayText("It is fire now, a streak of light tearing across the sky. For a moment, it is brighter than it has ever been, \n faster than it ever dreamed. Pulsar goes through the Earth’s Atmosphère.");
     noStroke();
-    displayText("");
     pop();
 
+
+        let cx2 = width / 2;
+        let cy2 = height * 1.6; 
+        let r2 = 1990; // Rayon du cercle de base pour la grosse particule
+
+        let cx3 = width / 2;
+        let cy3 = height * 1.6; 
+        let r3 = 4000; // Rayon du cercle de base pour la grosse particule
+
+    
+    push();
+        let radius = r2 + random(10, 50);  // Répulsion vers l'extérieur du cercle
+        let angle = atan2(mouseY - cy2, mouseX - cx2);
+        
+        // Calcul de la position interpolée entre la position actuelle et précédente
+        let smoothX = lerp(lastX || cx2, cx2 + cos(angle) * radius, 0.1); // Lissage de la position en X
+        let smoothY = lerp(lastY || cy2, cy2 + sin(angle) * radius, 0.1); // Lissage de la position en Y
+        lastX = smoothX;
+        lastY = smoothY;  
+        
+        fill(0);
+        circle(smoothX, smoothY, 100);
+     pop(); 
+    
+    
+     
+    
+
+
+    ////PARTICULES ATHMOSPHERE
+    for (let i = 0; i < 20; i++) {
+    createAtmo2((random(cx3),(cx3)), (random(cy3),(cy3)), r3);
+    }
+
+    for (let i = 0; i < 1; i++) {
+        createAtmo(smoothX, smoothY, 10);
+        }
+
+    ////AFFICHAGE PARTICULES + TRI
+    for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        particles[i].display();
+        if (particles[i].isOffScreen()) {
+            particles.splice(i, 1); // Supprimer les particules hors écran
+        }
+    }
+
+    /////ELLIPSE BASE ATHMOSPHERE
+    push();
+        stroke(0, 0, 0, 0);
+        noStroke(); 
+        strokeWeight(0);
+        noFill();
+        ellipse(cx2, cy2, r2-10 * 2); 
+    pop();
+
+   
+      
+
+    push();
+            translate((windowWidth/2), (windowHeight/2)+400, 800);
+            rotateY(millis()/10000); // rotation lente
+            texture(earth2);
+            noStroke(); 
+            sphere(300); // plus petite    
+     pop();
+
+
+    
 
 }
 
@@ -1057,9 +1157,76 @@ function scene25() {
     background(0);
     push();
     translate(0, 300);
+    displayText("For the first time, the universe sees it. For the first time, it matters. \n A golden trail unfurls behind it, vast and luminous, a final brushstroke across the sky.");
     noStroke();
-    displayText("");
     pop();
+
+   
+
+
+    let cx2 = width / 2;
+    let cy2 = height * 1.6; 
+    let r2 = 1990; // Rayon du cercle de base pour la grosse particule
+
+    let cx3 = width / 2;
+    let cy3 = height * 1.6; 
+    let r3 = 4000; // Rayon du cercle de base pour la grosse particule
+
+
+push();
+    let radius = r2 + random(10, 50);  // Répulsion vers l'extérieur du cercle
+    let angle = atan2(mouseY - cy2, mouseX - cx2);
+    
+    // Calcul de la position interpolée entre la position actuelle et précédente
+    let smoothX = lerp(lastX || cx2, cx2 + cos(angle) * radius, 0.1); // Lissage de la position en X
+    let smoothY = lerp(lastY || cy2, cy2 + sin(angle) * radius, 0.1); // Lissage de la position en Y
+    lastX = smoothX;
+    lastY = smoothY;  
+    
+    fill(0);
+    circle(smoothX, smoothY, 100);
+ pop(); 
+
+
+ 
+
+
+
+////PARTICULES ATHMOSPHERE
+for (let i = 0; i < 20; i++) {
+createAtmo2((random(cx3),(cx3)), (random(cy3),(cy3)), r3);
+}
+
+for (let i = 0; i < 1; i++) {
+    createAtmo(smoothX, smoothY, 10);
+    }
+
+////AFFICHAGE PARTICULES + TRI
+for (let i = particles.length - 1; i >= 0; i--) {
+    particles[i].update();
+    particles[i].display();
+    if (particles[i].isOffScreen()) {
+        particles.splice(i, 1); // Supprimer les particules hors écran
+    }
+}
+
+/////ELLIPSE BASE ATHMOSPHERE
+push();
+    stroke(0, 0, 0, 0);
+    noStroke(); 
+    strokeWeight(0);
+    noFill();
+    ellipse(cx2, cy2, r2-10 * 2); 
+pop();
+
+
+push();
+        translate((windowWidth/2), (windowHeight/2)+400, 800);
+        rotateY(millis()/10000); // rotation lente
+        texture(earth2);
+        noStroke(); 
+        sphere(300); // plus petite 
+ pop();
 
 
 }
@@ -1069,9 +1236,9 @@ function scene25() {
 function scene26() {
     background(0);
     push();
-    translate(0, 300);
+    translate(0, 300, 0);  // Plus proche que tous les objets 3D
     noStroke();
-    displayText("");
+    displayText("No longer dust. No longer lost. Just light, fleeting but infinite.");
     pop();
 
 
@@ -1082,7 +1249,7 @@ function scene27() {
     push();
     translate(0, 300);
     noStroke();
-    displayText("");
+    displayText("And when all fades, when the fire dies, only the night remains.");
     pop();
 
 
@@ -1093,7 +1260,7 @@ function scene28() {
     push();
     translate(0, 300);
     noStroke();
-    displayText("");
+    displayText("And into our head, the echo of its brilliance, carved into the dark.");
     pop();
 
 
@@ -1105,7 +1272,7 @@ function scene29() {
     push();
     translate(0, 300);
     noStroke();
-    displayText("");
+    displayText("[...]");
     pop();
 
 
@@ -1113,32 +1280,6 @@ function scene29() {
 
 
 function scene30() {
-    background(0);
-    push();
-    translate(0, 300);
-    noStroke();
-    displayText("");
-    pop();
-
-
-}
-
-
-
-function scene31() {
-    background(0);
-    push();
-    translate(0, 300);
-    noStroke();
-    displayText("");
-    pop();
-
-
-}
-
-
-
-function scene32() {
     background(0);
     push();
     translate(0, 300);

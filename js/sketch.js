@@ -790,7 +790,8 @@ class Atmo {
     display() {
       let col = color(255, 255, 255, this.life); // Couleur des particules avec un effet de dégradé
       fill(col);
-      stroke(0);
+      noStroke();
+      //stroke(0);
       ellipse(this.x, this.y, this.size);
     }
   

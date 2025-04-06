@@ -1,38 +1,39 @@
 const scenes = [
-    { text: "sc01_Entree", audio: "audio/universe1.mp3", sketch: scene1 },
+    { text: "sc01_Entree", audio : "audio/universe1.mp3", sketch: scene1 },
 
     { text: "sc02_Situation Intiale", audio: "audio/universe2.mp3", sketch: scene2 },
-    { text: "sc_03_Situation Intiale", audio: "audio/universe2.mp3", sketch: scene3 },
-    { text: "sc04_Situation Intiale", audio: "audio/universe2.mp3", sketch: scene4 },
-    { text: "sc05_Situation Intiale", audio: "audio/universe2.mp3", sketch: scene5 },
+    { text: "sc_03_Situation Intiale", sketch: scene3 },
+    { text: "sc04_Situation Intiale", sketch: scene4 },
+    { text: "sc05_Situation Intiale", sketch: scene5 },
 
-    { text: "sc06_TwistTurn", audio: "audio/universe2.mp3", sketch: scene6 },
-    { text: "sc07_TwistTurn", audio: "audio/universe2.mp3", sketch: scene7 },
-    { text: "sc08_TwistTurn", audio: "audio/universe2.mp3", sketch: scene8 },
-    { text: "sc09_TwistTurn", audio: "audio/universe2.mp3", sketch: scene9 },
-    { text: "sc10_TwistTurn", audio: "audio/universe2.mp3", sketch: scene10 },
+    { text: "sc06_TwistTurn", sketch: scene6 },
+    { text: "sc07_TwistTurn", sketch: scene7 },
+    { text: "sc08_TwistTurn", sketch: scene8 },
+    { text: "sc09_TwistTurn", sketch: scene9 },
+    { text: "sc10_TwistTurn", sketch: scene10 },
 
-    { text: "sc11_Transition", audio: "audio/universe2.mp3", sketch: scene11 },
-    { text: "sc12_Transition", audio: "audio/universe2.mp3", sketch: scene12 },
-    { text: "sc13_Transition", audio: "audio/universe2.mp3", sketch: scene13 },
-    { text: "sc14_Transition", audio: "audio/universe2.mp3", sketch: scene14 },
+    { text: "sc11_Transition", sketch: scene11 },
+    { text: "sc12_Transition", sketch: scene12 },
+    { text: "sc13_Transition", sketch: scene13 },
+    { text: "sc14_Transition", sketch: scene14 },
 
-    { text: "sc15_Shift1", audio: "audio/universe2.mp3", sketch: scene15 },
-    { text: "sc16_Shift1", audio: "audio/universe2.mp3", sketch: scene16 },
-    { text: "sc17_Shift1", audio: "audio/universe2.mp3", sketch: scene17 },
-    { text: "sc18_Shift1", audio: "audio/universe2.mp3", sketch: scene18 },
-    { text: "sc19_Shift1", audio: "audio/universe2.mp3", sketch: scene19 },
-    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene21 },
-    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene22 },
-    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene23 },
-    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene24 },
-    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene25 },
-    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene26 },
-    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene27 },
-    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene28 },
-    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene28 },
-    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene29 },
-    { text: "sc20_Shift1", audio: "audio/universe2.mp3", sketch: scene30 }
+    { text: "sc15_Shift1", sketch: scene15 },
+    { text: "sc16_Shift1", sketch: scene16 },
+    { text: "sc17_Shift1", sketch: scene17 },
+    { text: "sc18_Shift1", sketch: scene18 },
+    { text: "sc19_Shift1", sketch: scene19 },
+    { text: "sc19_Shift1", sketch: scene20 },
+    { text: "sc20_Shift1", sketch: scene21 },
+    { text: "sc20_Shift1", sketch: scene22 },
+    { text: "sc20_Shift1", sketch: scene23 },
+    { text: "sc20_Shift1", sketch: scene24 },
+    { text: "sc20_Shift1", sketch: scene25 },
+    { text: "sc20_Shift1", sketch: scene26 },
+    { text: "sc20_Shift1", sketch: scene27 },
+    { text: "sc20_Shift1", sketch: scene28 },
+    { text: "sc20_Shift1", sketch: scene28 },
+    { text: "sc20_Shift1", sketch: scene29 },
+    { text: "sc20_Shift1", sketch: scene30 }
 
 ];
 
@@ -898,7 +899,7 @@ function scene20() {
     push();
     translate(0, 500);
     noStroke();
-    displayText("From the dark, Pulsar has never seen anything so luminous. Faster now, it plunges toward the unknown. Closer.");
+    displayText("From the dark, Pulsar has never seen anything so luminous. \n Faster now, it plunges toward the unknown. Closer.");
     pop();
 
     if (speed < 50) {
@@ -1073,7 +1074,7 @@ let pulsar;
 function scene24() {
     background(0);
     push();
-    translate(0, 300);
+    translate(0, -500);
     displayText("It is fire now, a streak of light tearing across the sky. For a moment, it is brighter than it has ever been, \n faster than it ever dreamed. Pulsar goes through the Earth’s Atmosphère.");
     noStroke();
     pop();
@@ -1156,7 +1157,7 @@ function scene24() {
 function scene25() {
     background(0);
     push();
-    translate(0, 300);
+    translate(0, -500);
     displayText("For the first time, the universe sees it. For the first time, it matters. \n A golden trail unfurls behind it, vast and luminous, a final brushstroke across the sky.");
     noStroke();
     pop();

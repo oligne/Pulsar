@@ -40,6 +40,7 @@ const scenes = [
 
 
 let myFont; 
+let myFont2; 
 let currentScene = 0;
 let sound;
 
@@ -52,22 +53,30 @@ let n = 2000; ///Nombre de points
 function scene1() {
     background(0); // Fond noir
 
+    push();
+    translate(0, -150);
+    displayText5("Pulsar a dust story");
+    push();
+    translate(-160, 45);
+    displayText6("1");
+    pop();
+    pop();
+
+    push();
+    translate(0, 150);
+    displayText3("Avril 2025, Ensaama DSAA Numerique");
+    translate(0, -30);
+    displayText2("Coline Jousset");
+    pop();
 
     if (!enterButton) {
         enterButton = createButton('Click to Enter');
-        enterButton.position(width / 2 - 75, height / 2);
+        enterButton.position(width / 2-120, height / 2);
         styleButton(enterButton);
         enterButton.mousePressed(loadScene);
     }
 
-    push();
-        translate(50, 100);
-        displayText2("Pulsar, a dust story");
-    pop();
-    push(); 
-        translate(50, 130);
-        displayText3("Coline Jousset, Avril 2025");
-    pop(); 
+   
 
 
 if (points.length === 0) {
@@ -851,7 +860,6 @@ function scene19() {
 
     push(); 
         translate(0, 0, distance);
-
         targetDistance = -500;
         updateDistance();
         
@@ -910,7 +918,6 @@ function scene20() {
 
     push(); 
         translate(0, 0, distance);
-
         targetDistance = 100;
         updateDistance();
 
@@ -972,7 +979,7 @@ function scene21() {
         alphadist = map(distance, 200, 700, 255, 0);
         translate(0, 0, distance);
 
-       
+        
 
         targetDistance = 1000;
         updateDistance();
@@ -1073,6 +1080,15 @@ let pulsar;
 
 function scene24() {
     background(0);
+
+    push();
+        translate((windowWidth/2), (windowHeight/2)+400, 800);
+        rotateY(millis()/8000);
+        texture(earth2);
+        noStroke(); 
+        sphere(300); 
+    pop();
+
     push();
     translate(0, -500);
     displayText("It is fire now, a streak of light tearing across the sky. For a moment, it is brighter than it has ever been, \n faster than it ever dreamed. Pulsar goes through the Earth’s Atmosphère.");
@@ -1104,18 +1120,7 @@ function scene24() {
      pop(); 
     
     
-     
-    
 
-
-    ////PARTICULES ATHMOSPHERE
-    for (let i = 0; i < 20; i++) {
-    createAtmo2((random(cx3),(cx3)), (random(cy3),(cy3)), r3);
-    }
-
-    for (let i = 0; i < 1; i++) {
-        createAtmo(smoothX, smoothY, 10);
-        }
 
     ////AFFICHAGE PARTICULES + TRI
     for (let i = particles.length - 1; i >= 0; i--) {
@@ -1135,19 +1140,19 @@ function scene24() {
         ellipse(cx2, cy2, r2-10 * 2); 
     pop();
 
-   
-      
+////PARTICULES ATHMOSPHERE
+for (let i = 0; i < 20; i++) {
 
-    push();
-            translate((windowWidth/2), (windowHeight/2)+400, 800);
-            rotateY(millis()/10000); // rotation lente
-            texture(earth2);
-            noStroke(); 
-            sphere(300); // plus petite    
-     pop();
-
-
+    createAtmo2((random(cx3),(cx3)), (random(cy3),(cy3)), r3);
     
+    }
+
+for (let i = 0; i < 1; i++) {
+        createAtmo(smoothX, smoothY, 10);
+}
+
+
+cielEtoile();  
 
 }
 
@@ -1155,7 +1160,17 @@ function scene24() {
 
 
 function scene25() {
+
     background(0);
+
+    push();
+        translate((windowWidth/2), (windowHeight/2)+400, 800);
+        rotateY(millis()/8000); // rotation lente
+        texture(earth2);
+        noStroke(); 
+        sphere(300); // plus petite 
+    pop();
+
     push();
     translate(0, -500);
     displayText("For the first time, the universe sees it. For the first time, it matters. \n A golden trail unfurls behind it, vast and luminous, a final brushstroke across the sky.");
@@ -1189,19 +1204,6 @@ push();
  pop(); 
 
 
- 
-
-
-
-////PARTICULES ATHMOSPHERE
-for (let i = 0; i < 20; i++) {
-createAtmo2((random(cx3),(cx3)), (random(cy3),(cy3)), r3);
-}
-
-for (let i = 0; i < 1; i++) {
-    createAtmo(smoothX, smoothY, 10);
-    }
-
 ////AFFICHAGE PARTICULES + TRI
 for (let i = particles.length - 1; i >= 0; i--) {
     particles[i].update();
@@ -1220,50 +1222,182 @@ push();
     ellipse(cx2, cy2, r2-10 * 2); 
 pop();
 
+////PARTICULES ATHMOSPHERE
+for (let i = 0; i < 20; i++) {
+createAtmo2((random(cx3),(cx3)), (random(cy3),(cy3)), r3);
+}
 
-push();
-        translate((windowWidth/2), (windowHeight/2)+400, 800);
-        rotateY(millis()/10000); // rotation lente
-        texture(earth2);
-        noStroke(); 
-        sphere(300); // plus petite 
- pop();
 
+
+for (let i = 0; i < 1; i++) { 
+    createAtmo(mouseX, mouseY, 10);
+}
+cielEtoile();
 
 }
 
+let disparition = []; 
+let alphadispa;
+
+
+
+
+let transitionSpeed2 = 0.005;
+
+let earthY = 700;           // Position Y initiale
+let earthZ = 400;           // Position Z initiale
+let targetEarthY = 400;     // Position Y finale (comme scene27)
+let targetEarthZ = 800;     // Position Z finale
 
 
 function scene26() {
     background(0);
     push();
-    translate(0, 300, 0);  // Plus proche que tous les objets 3D
+    translate(0, -500, 0);  // Plus proche que tous les objets 3D
     noStroke();
     displayText("No longer dust. No longer lost. Just light, fleeting but infinite.");
     pop();
 
 
+    let cx2 = width / 2;
+    let cy2 = height * 1.6; 
+    let r2 = 1990; // Rayon du cercle de base pour la grosse particule
+
+    let cx3 = width / 2;
+    let cy3 = height * 1.6; 
+    let r3 = 4000; // Rayon du cercle de base pour la grosse particule
+
+
+    push();
+        // Interpolation fluide de la position de la Terre
+        earthY = lerp(earthY, targetEarthY, transitionSpeed2);
+        earthZ = lerp(earthZ, targetEarthZ, transitionSpeed2);
+
+        push();
+            translate(windowWidth / 2, windowHeight / 2 + earthY, earthZ);
+            rotateY(millis() / 10000); 
+            texture(earth2);
+            noStroke(); 
+            sphere(500); // Terre de taille 500
+        pop();
+    pop();
+
+    for (let i = 0; i < 20; i++) {
+        createAtmo2((random(cx3),(cx3)), (random(cy3),(cy3)), r3);
+        }
+        
+        
+    for (let i = 0; i < 1; i++) { 
+        createAtmo(mouseX, mouseY, 10);
+    }
+
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        particles[i].display();
+        if (particles[i].isOffScreen()) {
+            particles.splice(i, 1); // Supprimer les particules hors écran
+        }
+    }
+
+    cielEtoile();
+
 }
 
+let distance2 = 800; 
+let targetDistance2 = 1200;
+let distanceSpeed2 = 10
 function scene27() {
     background(0);
     push();
-    translate(0, 300);
+    translate(0, -500);
     noStroke();
     displayText("And when all fades, when the fire dies, only the night remains.");
     pop();
 
 
+    let cx3 = width / 2;
+    let cy3 = height * 1.6; 
+    let r3 = 4000; // Rayon du cercle de base pour la grosse particule
+
+
+    
+        
+push();
+    earthY = lerp(earthY, targetEarthY, transitionSpeed2);
+        earthZ = lerp(earthZ, targetEarthZ, transitionSpeed2);
+        //let distance = 800;
+        //alphadist = map(distance, 200, 700, 255, 0);
+        translate(windowWidth / 2, windowHeight / 2 + earthY, earthZ);
+        targetDistance2 = 1000;
+        updateDistance2();
+
+
+            push();
+                rotateY(millis()/8000); // rotation lente
+                texture(earth2);
+                noStroke(); 
+                sphere(500); 
+            pop();
+
+
+pop();
+       
+
+// for (let i = 0; i < 20; i++) {
+//     createAtmo2((random(cx3),(cx3)), (random(cy3),(cy3)), r3);
+// }
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        particles[i].display();
+        if (particles[i].isOffScreen()) {
+            particles.splice(i, 1); // Supprimer les particules hors écran
+        }
+    }
+
+    cielEtoile();
+
 }
+
+
+let earthAlpha = 255;  // Opacité initiale de la Terre (complètement visible)
+let fadeSpeed = 0.5;  
+
 
 function scene28() {
     background(0);
     push();
-    translate(0, 300);
+    translate(0, -500);
     noStroke();
     displayText("And into our head, the echo of its brilliance, carved into the dark.");
     pop();
 
+    push();
+        earthY = lerp(earthY, targetEarthY, transitionSpeed2);
+        earthZ = lerp(earthZ, targetEarthZ, transitionSpeed2);
+
+        translate(windowWidth / 2, windowHeight / 2 + earthY, earthZ);
+        targetDistance2 = 1000;
+        updateDistance2();
+
+        push();
+            rotateY(millis() / 8000); // rotation lente
+            texture(earth2);
+            noStroke();
+            tint(255, earthAlpha); // Appliquer l'alpha pour la disparition progressive
+            sphere(500); 
+        pop();
+    pop();
+
+    // Mise à jour de l'alpha de la Terre pour la disparition progressive
+    earthAlpha -= fadeSpeed; // Diminuer l'alpha
+    if (earthAlpha < 0) {
+        earthAlpha = 0; // S'assurer que l'alpha ne devienne pas négatif
+    }
+    
+
+    cielEtoile();
 
 }
 
@@ -1271,22 +1405,38 @@ function scene28() {
 function scene29() {
     background(0);
     push();
-    translate(0, 300);
+    translate(0, -500);
     noStroke();
     displayText("[...]");
     pop();
 
+
+cielEtoile();
 
 }
 
 
 function scene30() {
     background(0);
-    push();
-    translate(0, 300);
     noStroke();
-    displayText("");
+
+    push();
+    translate(0, 150);
+    displayText3("Avril 2025, Ensaama DSAA Numerique");
+    translate(0, -30);
+    displayText2("Coline Jousset");
     pop();
+
+    push();
+    translate(0, -150);
+    displayText5("Pulsar a dust story");
+    push();
+    translate(-160, 45);
+    displayText6("1");
+    pop();
+    pop();
+
+    cielEtoile();
 
 
 }

@@ -1,8 +1,10 @@
 let earth, moon;
+let particleLayer;
 
 
 function setup() {
     myFont = loadFont("typo.ttf");
+    myFont2 = loadFont("typo2.ttf");
     createCanvas(windowWidth, windowHeight, WEBGL);
     background(30);
     loadScene(0);
@@ -104,7 +106,7 @@ function displayText2(txt) {
     // Choisir la couleur du texte
     push(); 
     fill(255, 255, 255); // Blanc
-    textSize(20); // Taille du texte
+    textSize(23); // Taille du texte
     textFont(myFont); // Choisir une police
     textAlign(CENTER, CENTER); // Centrer le texte
     text(txt, width / 2, height / 2); // Afficher le texte au centre de l'écran
@@ -116,8 +118,33 @@ function displayText3(txt) {
     // Choisir la couleur du texte
     push(); 
     fill(255, 255, 255); // Blanc
-    textSize(14); // Taille du texte
+    textSize(18); // Taille du texte
     textFont(myFont); // Choisir une police
+    textAlign(CENTER, CENTER); // Centrer le texte
+    text(txt, width / 2, height / 2); // Afficher le texte au centre de l'écran
+    strokeWeight(0);
+    pop(); 
+}
+
+
+function displayText5(txt) {
+    // Choisir la couleur du texte
+    push(); 
+    fill(255, 255, 255); // Blanc
+    textSize(100); // Taille du texte
+    textFont(myFont2); // Choisir une police
+    textAlign(CENTER, CENTER); // Centrer le texte
+    text(txt, width / 2, height / 2); // Afficher le texte au centre de l'écran
+    strokeWeight(0);
+    pop(); 
+}
+
+function displayText6(txt) {
+    // Choisir la couleur du texte
+    push(); 
+    fill(255, 255, 255); // Blanc
+    textSize(32); // Taille du texte
+    textFont(myFont2); // Choisir une police
     textAlign(CENTER, CENTER); // Centrer le texte
     text(txt, width / 2, height / 2); // Afficher le texte au centre de l'écran
     strokeWeight(0);
@@ -583,6 +610,17 @@ for (let i = 0; i < meteor.length; i++) {
   }
 
 
+  function updateDistance2() {
+    if (distance2 < targetDistance2) {
+      distance2 += distanceSpeed2;
+      if (distance2 > targetDistance2) distance2 = targetDistance2; // éviter de dépasser
+    } else if (distance2 > targetDistance2) {
+      distance2 -= distanceSpeed2;
+      if (distance2 < targetDistance2) distance2 = targetDistance2;
+    }
+  }
+
+
   ///SCENE 22
 
   class MvntCiel2 {
@@ -728,6 +766,7 @@ class Atmo {
       // Réduire la durée de vie de la particule
       this.life -= 1;
     }
+    
   
     display() {
       let col = color(255, 255, 255, this.life); // Couleur des particules avec un effet de dégradé
@@ -786,6 +825,8 @@ class Atmo {
       // Réduire la durée de vie de la particule
       this.life -= 1;
     }
+
+   
   
     display() {
       let col = color(255, 255, 255, this.life); // Couleur des particules avec un effet de dégradé
@@ -824,3 +865,39 @@ class Atmo {
 
 
 
+
+  function cielEtoile() {
+   
+    
+    push();
+        translate(width / 2, height / 2);   
+        if (points.length === 0) {
+            // Crée les points une fois au début
+            for (let i = 0; i < n; i++) {
+                points.push(createVector(random(-width, width), random(-height, height)));
+            }
+        }
+        for (let i = 0; i < points.length; i++) {
+            let p = points[i];
+
+            // Déplacement des particules en Z pour donner un effet de mouvement
+            p.z -= 2; // Vitesse de déplacement en Z (plus le chiffre est grand, plus la vitesse est lente)
+            
+            // Si la particule sort de l'écran, on la réinitialise
+            if (p.z <= 0) {
+                p.z = random(-500, 300); // Remise à une position aléatoire plus proche
+            }
+
+            // Calcul de la taille et de la transparence en fonction de la position en Z
+            let scale = map(p.z, 50, 300, 2, 0.5); // La taille diminue à mesure que la particule approche
+            let alpha = map(p.z, 50, 300, 255, 0); // L'alpha diminue aussi avec la profondeur
+
+            // Affichage de la particule avec la perspective
+            noStroke();
+            fill(255, alpha);
+            ellipse(p.x, p.y, scale, scale); // Utilisation d'un ellipse pour la particule
+        }
+    pop();
+
+
+  }

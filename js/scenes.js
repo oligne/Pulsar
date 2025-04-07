@@ -434,7 +434,7 @@ function scene11() {
     push();
     translate(0, 300);
     noStroke();
-    displayText("In the wake of the storm, the dust cloud is fading away. Where there was once only drifting nothingness, \n there is now something, a meteorite, raw and unpolished."); // Affiche du texte
+    displayText("In the wake of the storm, the dust cloud is fading away. \n Where there was once only drifting nothingness, \n there is now something, a meteorite, raw and unpolished."); // Affiche du texte
     pop();
 
     // Créer de nouvelles météorites si nécessaire
@@ -497,7 +497,7 @@ function scene12() {
     push();
     translate(0, 300);
     noStroke();
-    displayText("Small, fragile, yet imbued with the momentum of the cataclysm that forged it. Pulsar is born. \n And the universe, which had so long ignored its existence, has now cast it into motion.");
+    displayText("Small, fragile, yet imbued with the momentum of the cataclysm that forged it. \n Pulsar is born. And the universe, which had so long ignored its existence, \n has now cast it into motion.");
     pop();
  
 
@@ -568,7 +568,7 @@ function scene13() {
     push();
     translate(0, 300);
     noStroke();
-    displayText("Gravitational forces pull and twist its trajectory, it travels and discorver lifeless planets or hostile moons. \n Pulled by unseen hands, Pulsar is thrown into the void.");
+    displayText("Gravitational forces pull and twist its trajectory, \n it travels and discorver lifeless planets or hostile moons. \n Pulled by unseen hands, Pulsar is thrown into the void.");
     pop();
 
     meteorfunction(); 
@@ -674,7 +674,7 @@ background(0);
     push();
         translate(0, 300);
         noStroke();
-        displayText("Yet, far ahead, something shimmers. Not the cold glint of stars, nor the distant glow of nebulae. \n A world, small yet radiant, turns in the dark."); // Affiche du texte
+        displayText("Yet, far ahead, something shimmers.  \n Not the cold glint of stars, nor the distant glow of nebulae. \n A world, small yet radiant, turns in the dark."); // Affiche du texte
     pop();
 
     ciel(); 
@@ -787,7 +787,7 @@ function scene18() {
     push();
         translate(0, 300);
         noStroke();
-        displayText("In the distance, the meteorite spots a blue planet surrounded by satellites dancing like fireflies. \n This comforting vision contrasts with the cold, hostile universe it has crossed.");
+        displayText("In the distance, the meteorite spots a blue planet surrounded by satellites  \n dancing like fireflies. This comforting vision contrasts with the cold,  \n hostile universe it has crossed.");
     pop();
     
 
@@ -849,7 +849,7 @@ function scene19() {
         push();
         translate(0, 300);
         noStroke();
-        displayText("The blue sphere swells before Dusty’s eyes, vast and alive. \n Swirls of white curl across its surface, shifting, breathing. Oceans glisten beneath the sun, a deep, endless blue. ");
+        displayText("The blue sphere swells before Dusty’s eyes, vast and alive. \n Swirls of white curl across its surface, shifting, breathing.  \n Oceans glisten beneath the sun, a deep, endless blue. ");
     pop();
 
     if (speed < 30) {
@@ -1061,7 +1061,7 @@ function scene23() {
     push();
     noStroke();
     translate(0, 300);
-    displayText4("Air, dense and unyielding, crashes against Dusty’s fragile form. Heat rises, wrapping it in a golden glow.");
+    displayText4("Air, dense and unyielding, crashes against Dusty’s fragile form.  \n Heat rises, wrapping it in a golden glow.");
     pop();
 
 
@@ -1091,7 +1091,7 @@ function scene24() {
 
     push();
     translate(0, -500);
-    displayText("It is fire now, a streak of light tearing across the sky. For a moment, it is brighter than it has ever been, \n faster than it ever dreamed. Pulsar goes through the Earth’s Atmosphère.");
+    displayText("It is fire now, a streak of light tearing across the sky. For a moment,  \n it is brighter than it has ever been, \n faster than it ever dreamed. Pulsar goes through the Earth’s Atmosphère.");
     noStroke();
     pop();
 
